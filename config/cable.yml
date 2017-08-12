@@ -7,4 +7,4 @@ test:
 production:
   adapter: redis
   url: redis://localhost:6379/1
-  channel_prefix: RiverLevelSite_production
+  channel_prefix: river_level_site_production

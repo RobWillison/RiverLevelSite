@@ -1,0 +1,8 @@
+
+
+<h1>Rivers</h1>
+<ul>
+<% @rivers.each do |river| %>
+<li> <%= link_to(river.name, river) %> </li>
+<% end %>
+</ul>

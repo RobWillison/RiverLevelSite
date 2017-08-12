@@ -9,13 +9,21 @@
  * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
- *
  *= require_tree .
- *= require bootstrap
- *= require bootstrap_responsive
  *= require_self
  */
 
+
 @import "bootstrap-sprockets"
 @import "bootstrap"
+@import "homepage"
 
+span.twitter-typeahead
+  width: 100%
+
+.input-group
+  span.twitter-typeahead
+    display: block !important
+    .tt-dropdown-menu
+      top: 32px !important
+      width: 100%

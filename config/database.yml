@@ -5,13 +5,20 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: sqlite3
+  adapter: mysql2
+  encoding: utf8
+  database: riverLevelsSite
+  username: river_level
+  password: password
+  host: 127.0.0.1
+  port: 3306
+
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
 development:
-  <<: *default
-  database: db/development.sqlite3
+    <<: *default
+
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
