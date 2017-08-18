@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: {registrations: "registrations"}
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get 'homepage/index'
   root 'homepage#index'
@@ -8,5 +9,8 @@ Rails.application.routes.draw do
   get 'api/rivers', to: 'api/rivers#all'
 
   get "api/rivers/autocomplete" => "api/rivers#autocomplete"
+
+  get "admin" => "admin#index"
+
 
 end

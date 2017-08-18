@@ -23,4 +23,3 @@ $('.typeahead').typeahead(null, {
   displayKey: 'num',
   source: numbers.ttAdapter()
 })
-alert('test')

@@ -59,3 +59,5 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
 gem 'twitter-typeahead-rails'
+
+gem 'devise'
