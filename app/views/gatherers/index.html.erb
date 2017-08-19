@@ -1,5 +1,10 @@
-<ul>
+<table>
+  <tr><th>Name<th></tr>
+  <tr><th>Last Run<th></tr>
 <% @gatherers.each do |gatherer| %>
-  <li><a href="gatherers/<%= gatherer.id %>"><%= gatherer.name %></a></li>
+  <tr>
+    <td><a href="gatherers/<%= gatherer.id %>"><%= gatherer.name %></a></td>
+    <td><%= gatherer.last_run || 'None' %></td>
+  </tr>
 <% end %>
-</ul>
+</table>
