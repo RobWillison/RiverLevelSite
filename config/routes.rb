@@ -16,5 +16,7 @@ Rails.application.routes.draw do
 
   get "admin/gatherers/:id" => "gatherers#show"
 
+  get "admin/forecast-actual-diff-tool" => "forecast_actual_diff_tool#index"
+
 
 end
