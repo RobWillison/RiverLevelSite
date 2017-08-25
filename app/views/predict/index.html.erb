@@ -1,0 +1,16 @@
+<h1> Predictions </h1>
+
+<table>
+  <tr><th>Run Time<th>
+  <th>Acuracy At 1 hour<th>
+  <th>Acuracy At 12 hour<th>
+  <th>Acuracy At 24 hour<th>
+  <th>Acuracy At 48 hour<th>
+  <th>Acuracy At 7 days<th>
+  </tr>
+<% @predictions.each do |prediction| %>
+  <tr>
+    <td><%= prediction %></td>
+  </tr>
+<% end %>
+</table>

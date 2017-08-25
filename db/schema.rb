@@ -10,12 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170818122238) do
+ActiveRecord::Schema.define(version: 20170825131800) do
 
   create_table "gatherers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.string "results_table"
     t.datetime "last_run"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "predicted_river_levels", id: :integer, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.integer "river_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "predict_time", null: false
+    t.float "river_level", limit: 24, null: false
+  end
+
+  create_table "predictions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.datetime "created_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -29,10 +42,10 @@ ActiveRecord::Schema.define(version: 20170818122238) do
   end
 
   create_table "rain_forecast_data", id: :integer, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
-    t.integer "area_id", null: false
-    t.integer "rain_value", null: false
     t.integer "timestamp", null: false
     t.datetime "time_string", null: false
+    t.integer "rain_value", null: false
+    t.integer "area_id", null: false
     t.index ["area_id", "time_string"], name: "unique_check", unique: true
   end
 
