@@ -1,16 +1,22 @@
 <h1> Predictions </h1>
 
 <table>
-  <tr><th>Run Time<th>
-  <th>Acuracy At 1 hour<th>
-  <th>Acuracy At 12 hour<th>
-  <th>Acuracy At 24 hour<th>
-  <th>Acuracy At 48 hour<th>
-  <th>Acuracy At 7 days<th>
+  <tr>
+  <th>Run Time</th>
+  <th>Acuracy At 1 hour</th>
+  <th>Acuracy At 12 hour</th>
+  <th>Acuracy At 24 hour</th>
+  <th>Acuracy At 48 hour</th>
+  <th>Acuracy At 7 days</th>
   </tr>
 <% @predictions.each do |prediction| %>
   <tr>
-    <td><%= prediction %></td>
+    <td><a href='predict/<%= prediction.id%>'><%= prediction.created_at %></a></td>
+    <td><%= prediction.acuracy[:hour1] %></td>
+    <td><%= prediction.acuracy[:hour12] %></td>
+    <td><%= prediction.acuracy[:hour24] %></td>
+    <td><%= prediction.acuracy[:hour48] %></td>
+    <td><%= prediction.acuracy[:day7] %></td>
   </tr>
 <% end %>
 </table>

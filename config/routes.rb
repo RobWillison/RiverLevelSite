@@ -20,5 +20,6 @@ Rails.application.routes.draw do
   get "admin/forecast-actual-diff-tool/:days" => "forecast_actual_diff_tool#show"
 
   get "admin/predict" => "predict#index"
+  get "admin/predict/:id" => "predict#show"
 
 end
