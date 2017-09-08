@@ -4,7 +4,8 @@
   <canvas id="line-chart" width="800" height="450"
     data-timestamps="<%= @river_data[:timestamps].to_json %>"
     data-real="<%= @river_data[:real_levels].to_json %>"
-    data-forecast="<%= @river_data[:predicted_level].to_json %>"></canvas>
+    data-forecast="<%= @river_data[:predicted_level].to_json %>"
+    data-rain="<%= @river_data[:rain_level].to_json %>"></canvas>
 </div>
 <script>
 new Chart(document.getElementById("line-chart"), {
@@ -20,6 +21,11 @@ new Chart(document.getElementById("line-chart"), {
         data: $('#line-chart').data('forecast'),
         label: "Forecast River Level",
         borderColor: "#8e5ea2",
+        fill: false
+      }, {
+        data: $('#line-chart').data('rain'),
+        label: "Rain Levels",
+        borderColor: "#FF69B4",
         fill: false
       }
     ]

@@ -16,9 +16,10 @@ class Prediction < ApplicationRecord
   end
 
   def first_timestamp
-    sql = 'SELECT predict_time FROM predicted_river_levels ORDER BY predict_time ASC LIMIT 1'
+    sql = 'SELECT predict_time FROM predicted_river_levels WHERE prediction_id = ? ORDER BY predict_time ASC LIMIT 1'
     query = ActiveRecord::Base.connection.raw_connection.prepare(sql)
-    results_array = query.execute()
+    results_array = query.execute(id)
+    return nil if results_array.first == nil
     results_array.first[0]
   end
 
@@ -30,11 +31,12 @@ class Prediction < ApplicationRecord
               INNER JOIN `river_data`
                 ON `river_data`.`time_string` = `predicted_river_levels`.`predict_time`
                   AND `river_data`.`river_id` = `predicted_river_levels`.`river_id`
-            WHERE predicted_river_levels.predict_time = ?'
+            WHERE predicted_river_levels.predict_time = ? AND predicted_river_levels.prediction_id = ?'
 
     query = ActiveRecord::Base.connection.raw_connection.prepare(sql)
-    results_array = query.execute(datetime)
+    results_array = query.execute(datetime, id)
 
+    return nil if results_array.first == nil
     (results_array.first[1] - results_array.first[2]).round(2)
   end
 
@@ -46,12 +48,25 @@ class Prediction < ApplicationRecord
     timestamps = results_array.to_a.flatten
     real_levels = get_real_levels(timestamps)
     predicted_level = get_predicted_level(timestamps)
-
+    rain_level = get_rain_levels(timestamps)
     {
       timestamps: timestamps,
       real_levels: real_levels,
-      predicted_level: predicted_level
+      predicted_level: predicted_level,
+      rain_level: rain_level
     }
+  end
+
+  def get_rain_levels(timestamps)
+    timestamps.map {|timestamp| get_rain_level_for(timestamp)}
+  end
+
+  def get_rain_level_for(datetime)
+    sql = 'SELECT rain_value FROM rain_forecast_data WHERE area_id = 811 ORDER BY  ABS(time_string - ?) ASC LIMIT 1'
+    query = ActiveRecord::Base.connection.raw_connection.prepare(sql)
+    results_array = query.execute(datetime)
+    return 0 if results_array.first == nil
+    results_array.first[0] / 1000
   end
 
   def get_real_levels(timestamps)
@@ -59,10 +74,12 @@ class Prediction < ApplicationRecord
   end
 
   def get_real_level_for(datetime)
-    sql = 'SELECT river_level FROM river_data WHERE time_string = ?'
+    sql = 'SELECT river_level FROM river_data ORDER BY  ABS(time_string - ?) ASC LIMIT 1'
     query = ActiveRecord::Base.connection.raw_connection.prepare(sql)
     results_array = query.execute(datetime)
-
+    if results_array.first == nil
+      raise datetime.to_s
+    end
     results_array.first[0]
   end
 
@@ -71,9 +88,9 @@ class Prediction < ApplicationRecord
   end
 
   def get_predicted_level_for(datetime)
-    sql = 'SELECT river_level FROM predicted_river_levels WHERE predict_time = ?'
+    sql = 'SELECT river_level FROM predicted_river_levels WHERE predict_time = ? AND prediction_id = ?  LIMIT 1'
     query = ActiveRecord::Base.connection.raw_connection.prepare(sql)
-    results_array = query.execute(datetime)
+    results_array = query.execute(datetime, id)
 
     results_array.first[0]
   end
