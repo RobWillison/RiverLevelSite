@@ -40,6 +40,20 @@ class Prediction < ApplicationRecord
     (results_array.first[1] - results_array.first[2]).round(2)
   end
 
+  def get_prediction_data
+    sql = 'SELECT predict_time FROM predicted_river_levels WHERE prediction_id = ?'
+    query = ActiveRecord::Base.connection.raw_connection.prepare(sql)
+    results_array = query.execute(id)
+
+    timestamps = results_array.to_a.flatten
+    predicted_level = get_predicted_level(timestamps)
+    
+    {
+      timestamps: timestamps,
+      predicted_level: predicted_level,
+    }
+  end
+
   def get_river_data
     sql = 'SELECT predict_time FROM predicted_river_levels WHERE prediction_id = ?'
     query = ActiveRecord::Base.connection.raw_connection.prepare(sql)

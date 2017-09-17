@@ -1,1 +1,38 @@
 <h1> <%= @river.name %> </h1>
+
+<div width="80" height="450">
+  <canvas id="line-chart" width="800" height="450"
+    data-timestamps="<%= @river_data[:timestamps].to_json %>"
+    data-real="<%= @river_data[:real_levels].to_json %>"
+    data-forecast="<%= @river_data[:predicted_level].to_json %>"
+    data-rain="<%= @river_data[:rain_level].to_json %>"></canvas>
+</div>
+<script>
+new Chart(document.getElementById("line-chart"), {
+  type: 'line',
+  data: {
+    labels: $('#line-chart').data('timestamps'),
+    datasets: [{
+        data: $('#line-chart').data('real'),
+        label: "Actual River Level",
+        borderColor: "#3e95cd",
+        fill: false
+      }, {
+        data: $('#line-chart').data('forecast'),
+        label: "Forecast River Level",
+        borderColor: "#8e5ea2",
+        fill: false
+      }, {
+        data: $('#line-chart').data('rain'),
+        label: "Rain Levels",
+        borderColor: "#FF69B4",
+        fill: false
+      }
+    ]
+  },
+  options: {
+    maintainAspectRatio: true,
+    responsive: false,
+  }
+});
+</script>
