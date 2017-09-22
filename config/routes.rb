@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :rivers
 
   get 'api/rivers', to: 'api/rivers#all'
+  get 'api/rivers/search', to: 'api/rivers#search'
 
   get "api/rivers/autocomplete" => "api/rivers#autocomplete"
 

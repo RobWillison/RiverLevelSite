@@ -61,3 +61,12 @@ gem 'jquery-ui-rails'
 gem 'twitter-typeahead-rails'
 
 gem 'devise'
+
+# Added at 2017-09-22 21:52:19 +0100 by robwillisoon:
+gem "elasticsearch-model", "~> 5.0"
+
+# Added at 2017-09-22 21:52:33 +0100 by robwillisoon:
+gem "elasticsearch-rails", "~> 5.0"
+
+# Added at 2017-09-22 21:54:31 +0100 by robwillisoon:
+gem "elasticsearch", "~> 5.0"
