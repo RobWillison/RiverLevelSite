@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825131800) do
+ActiveRecord::Schema.define(version: 20170922171239) do
 
   create_table "gatherers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
@@ -22,15 +22,16 @@ ActiveRecord::Schema.define(version: 20170825131800) do
 
   create_table "predicted_river_levels", id: :integer, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "river_id", null: false
-    t.datetime "created_at", null: false
     t.datetime "predict_time", null: false
     t.float "river_level", limit: 24, null: false
+    t.integer "prediction_id"
   end
 
   create_table "predictions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.datetime "created_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.integer "river_id"
   end
 
   create_table "rain_data", id: :integer, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
@@ -38,7 +39,9 @@ ActiveRecord::Schema.define(version: 20170825131800) do
     t.datetime "time_string"
     t.integer "rain_value"
     t.integer "area_id"
-    t.index ["timestamp"], name: "rain_timestamp"
+    t.index ["time_string"], name: "idx_time_string"
+    t.index ["time_string"], name: "rain_time_string"
+    t.index ["timestamp"], name: "idx_timestamp"
   end
 
   create_table "rain_forecast_data", id: :integer, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
@@ -46,15 +49,21 @@ ActiveRecord::Schema.define(version: 20170825131800) do
     t.datetime "time_string", null: false
     t.integer "rain_value", null: false
     t.integer "area_id", null: false
-    t.index ["area_id", "time_string"], name: "unique_check", unique: true
+    t.integer "source"
+    t.index ["time_string", "area_id", "source"], name: "unique_check", unique: true
+    t.index ["time_string"], name: "idx_time_string"
+    t.index ["time_string"], name: "rain_time_string"
+    t.index ["timestamp"], name: "idx_timestamp"
   end
 
   create_table "river_data", id: :integer, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "timestamp", null: false
-    t.string "station", default: "", null: false
     t.datetime "time_string", null: false
+    t.string "station", default: "", null: false
     t.float "river_level", limit: 24, null: false
-    t.index ["timestamp"], name: "river_timestamp"
+    t.integer "river_id"
+    t.index ["time_string"], name: "idx_time_string"
+    t.index ["timestamp"], name: "idx_timestamp"
   end
 
   create_table "rivers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
@@ -63,6 +72,9 @@ ActiveRecord::Schema.define(version: 20170825131800) do
     t.string "name"
     t.float "lat", limit: 53
     t.float "long", limit: 53
+    t.string "station"
+    t.integer "rain_radar_area_id"
+    t.string "level_indicators"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
