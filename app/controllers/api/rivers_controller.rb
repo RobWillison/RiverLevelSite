@@ -1,8 +1,12 @@
 class Api::RiversController < ApplicationController
   def all
-    rivers = River.where('`lat` IS NOT NULL AND `long` IS NOT NULL').limit(10).pluck(:id, :lat, :long)
+    rivers = River.es_get_all
 
-    render :json => rivers
+    river_data = rivers.map do |river|
+      {id: river.id, lat: river.lat, long: river.long, color: river.dot_color}
+    end
+
+    render :json => river_data
   end
 
   def search

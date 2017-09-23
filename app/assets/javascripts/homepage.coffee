@@ -301,13 +301,13 @@ root.initMap = () ->
 
 addMarkers = (data) ->
   $.each( data, (key, val) ->
-    location = new google.maps.LatLng(val[1], val[2])
+    location = new google.maps.LatLng(val.lat, val.long)
     marker = new google.maps.Marker({
       position: location,
-      url: '/rivers/' + val[0]
+      url: '/rivers/' + val.id
       icon: {
         path: google.maps.SymbolPath.CIRCLE,
-        strokeColor: 'red',
+        strokeColor: val.color,
         strokeWeight: 4,
         scale: 2
       }
