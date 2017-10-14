@@ -1,0 +1,19 @@
+<table class='table table-striped'>
+  <tr>
+    <th>Function Call</th>
+    <th>Last Run</th>
+    <th>Duration</th>
+    <th>Last Error</th>
+  </tr>
+<% @jobs.each do |job| %>
+  <tr>
+    <td><%= job.call %></td>
+    <td><%= job.last_run || 'None' %></td>
+    <td><%= job.duration.is_a?(String) ? job.duration : distance_of_time_in_words(job.duration) %></td>
+    <td><%= job.error_message || 'None' %></td>
+  </tr>
+<% end %>
+</table>
+
+
+<%= select_tag "river", options_for_select([['New York' ,'New york'], ['Los Angeles', 'Los Angeles']]) %>

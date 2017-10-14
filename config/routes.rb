@@ -13,6 +13,9 @@ Rails.application.routes.draw do
 
   get "admin" => "admin#index"
 
+  get "admin/jobs" => "job#index"
+  post "admin/jobs" => "job#create"
+
   get "admin/gatherers" => "gatherers#index"
 
   get "admin/gatherers/:id" => "gatherers#show"
