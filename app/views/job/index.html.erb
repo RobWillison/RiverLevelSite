@@ -16,4 +16,7 @@
 </table>
 
 
-<%= select_tag "river", options_for_select([['New York' ,'New york'], ['Los Angeles', 'Los Angeles']]) %>
+<%= form_tag({controller: "job", action: "create"}, method: "post", class: "form-group") %>
+<%= select_tag "river", options_for_select(River.all.collect { |river| [river.name, river.id]}), class: 'form-control' %>
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
