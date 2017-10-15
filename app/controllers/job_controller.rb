@@ -11,6 +11,8 @@ class JobController < ApplicationController
     Job.create!(call: "TrainingData.updateRiver(#{river_id})", run_frequency: 2, priority: 10)
     Job.create!(call: "Model.train(#{river_id})", run_frequency: 2, priority: 20)
     Job.create!(call: "Predict.predict(#{river_id})", run_frequency: 1, priority: 30)
+
+    redirect_to :back
   end
 
   def check_admin!
