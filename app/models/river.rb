@@ -46,7 +46,8 @@ class River < ApplicationRecord
       lat: lat,
       long: long,
       current_indicator: get_current_indicator,
-      dot_color: get_dot_color
+      dot_color: get_dot_color,
+      predicted: has_prediction?,
     }
   end
 
@@ -73,6 +74,10 @@ class River < ApplicationRecord
     river + ' - ' + section
   end
 
+  def has_prediction?
+    Prediction.where(river_id: id).present?
+  end
+
   def jobs?
     job = Job.where(call: "Predict.predict(#{id})")
     return job.present?
@@ -87,7 +92,7 @@ class River < ApplicationRecord
     def ready_to_predict
       River.all.select { |river| river.enough_data_for_prediction? && !river.jobs?}
     end
-    
+
     def search(query)
       __elasticsearch__.search(
         {
