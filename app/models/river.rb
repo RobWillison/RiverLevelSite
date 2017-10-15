@@ -18,7 +18,7 @@ class River < ApplicationRecord
   scope :with_station, -> { where 'station IS NOT NULL' }
 
   def get_current_level
-    result = river_datas.order(:timestamp).limit(1)
+    result = river_datas.order(timestamp: :desc).limit(1)
 
     return -1 unless result[0]
 
@@ -27,7 +27,8 @@ class River < ApplicationRecord
 
   def get_current_indicator
     level = get_current_level
-    indicators = JSON.parse(level_indicators.gsub('\'', '"'))
+    indicators = JSON.parse(level_indicators.gsub('\'', '"')).sort_by {|k, v| v}
+    puts indicators.to_s
     indicator = indicators.find { |i| i[1] > level }
     return -1 unless indicator
     indicator[0]
