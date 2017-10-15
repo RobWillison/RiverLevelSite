@@ -72,6 +72,11 @@ class River < ApplicationRecord
     river + ' - ' + section
   end
 
+  def has_jobs
+    job = Job.where(call: "Predict.predict(#{id})")
+    return job?
+  end
+
   class << self
     def search(query)
       __elasticsearch__.search(
