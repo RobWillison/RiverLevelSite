@@ -77,6 +77,10 @@ class River < ApplicationRecord
     return job.present?
   end
 
+  def enough_data_for_prediction
+    return station.present? && rain_radar_area_id.present? && source_agency == 'ea'
+  end
+
   class << self
     def search(query)
       __elasticsearch__.search(
