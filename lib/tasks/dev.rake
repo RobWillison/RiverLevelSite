@@ -1,4 +1,4 @@
 desc "Index Rivers"
-task :index do
+task index: [:environment] do
   River.all.index!
 end
