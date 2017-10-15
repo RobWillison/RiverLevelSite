@@ -121,6 +121,9 @@ class River < ApplicationRecord
               ],
               must_not: [
                 {match: { current_indicator: -1 }}
+              ],
+              must: [
+                { exists: { field: :predicted } }
               ]
             }
           }
