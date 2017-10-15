@@ -16,6 +16,7 @@ class River < ApplicationRecord
 
   scope :with_calibration, -> { where('level_indicators != "[]"') }
   scope :with_station, -> { where 'station IS NOT NULL' }
+
   def get_current_level
     result = river_datas.order(:timestamp).limit(1)
 
@@ -72,16 +73,21 @@ class River < ApplicationRecord
     river + ' - ' + section
   end
 
-  def has_jobs
+  def jobs?
     job = Job.where(call: "Predict.predict(#{id})")
     return job.present?
   end
 
-  def enough_data_for_prediction
+  def enough_data_for_prediction?
     return station.present? && rain_radar_area_id.present? && source_agency == 'ea'
   end
 
   class << self
+
+    def ready_to_predict
+      River.all.select { |river| river.enough_data_for_prediction? && !river.jobs?}
+    end
+    
     def search(query)
       __elasticsearch__.search(
         {

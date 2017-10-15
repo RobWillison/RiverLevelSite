@@ -4,6 +4,7 @@ class JobController < ApplicationController
 
   def index
     @jobs = Job.all
+    @rivers = River.ready_to_predict
   end
 
   def create
