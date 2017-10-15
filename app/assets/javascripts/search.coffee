@@ -10,6 +10,7 @@ $(window).load ->
       processResults: (data) -> return { results: data }
     }
   }
+  $('#search').show()
   )
 
   $('#search').on("change", (e) ->
