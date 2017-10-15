@@ -6,7 +6,7 @@
     <th>Last Error</th>
   </tr>
 <% @jobs.each do |job| %>
-  <tr>
+  <tr style= <%= job.running? ? 'background-color:#98FB98' : '' %>>
     <td><%= job.call %></td>
     <td><%= job.last_run ? time_ago_in_words(job.last_run) + ' ago' : 'None' %></td>
     <td><%= job.duration.is_a?(String) ? job.duration : distance_of_time_in_words(job.duration) %></td>
