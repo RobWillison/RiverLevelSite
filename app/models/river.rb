@@ -123,7 +123,7 @@ class River < ApplicationRecord
                 {match: { current_indicator: -1 }}
               ],
               must: [
-                { exists: { field: :predicted } }
+                { match: { predicted: true } }
               ]
             }
           }
