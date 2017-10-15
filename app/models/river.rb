@@ -74,7 +74,7 @@ class River < ApplicationRecord
 
   def has_jobs
     job = Job.where(call: "Predict.predict(#{id})")
-    return job?
+    return job.present?
   end
 
   class << self
