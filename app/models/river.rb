@@ -17,16 +17,16 @@ class River < ApplicationRecord
   scope :with_calibration, -> { where('level_indicators != "[]"') }
   scope :with_station, -> { where 'station IS NOT NULL' }
 
-  def get_current_level
+  def get_latest_reading
     result = river_datas.order(timestamp: :desc).limit(1)
 
     return -1 unless result[0]
 
-    result[0].river_level
+    result[0]
   end
 
   def get_current_indicator
-    level = get_current_level
+    level = get_latest_reading.river_level
     indicators = JSON.parse(level_indicators.gsub('\'', '"')).sort_by {|k, v| v}
     puts indicators.to_s
     indicator = indicators.find { |i| i[1] > level }

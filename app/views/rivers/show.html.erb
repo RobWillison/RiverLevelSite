@@ -1,5 +1,5 @@
 <center><h1> <%= @river.name %></h1><center>
-
+<center><h2>( <%= @river.get_latest_reading.river_level %> - <%= distance_of_time_in_words(@river.get_latest_reading.time_string.to_time, Time.now) %> ago )</h2></center>
 <% if @river_data %>
 <div width="80" height="450">
   <canvas id="line-chart" width="800" height="450"
