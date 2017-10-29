@@ -30,7 +30,7 @@ class River < ApplicationRecord
     level = get_latest_reading.river_level
     indicators = JSON.parse(level_indicators.gsub('\'', '"')).sort_by {|k, v| -v}
     puts indicators.to_s
-    indicator = indicators.find { |i| i[1] > level }
+    indicator = indicators.find { |i| i[1] < level }
     return -1 unless indicator
     indicator[0]
   end
