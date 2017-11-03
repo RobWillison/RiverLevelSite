@@ -133,8 +133,12 @@ class River < ApplicationRecord
     end
 
     def index!
-      all.each do |i|
+<<<<<<< HEAD
+      self.all.each do |i|
         next unless has_prediction?
+=======
+      all.each do |i|
+>>>>>>> 362991536d8b7377208725b18eb84d22b63aa995
         i.__elasticsearch__.index_document
       end
     end

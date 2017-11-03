@@ -26,11 +26,10 @@ class River < ApplicationRecord
   end
 
   def get_current_indicator
-    return 'unknown' if get_latest_reading == -1
     level = get_latest_reading.river_level
-    indicators = JSON.parse(level_indicators.gsub('\'', '"')).sort_by {|k, v| -v}
+    indicators = JSON.parse(level_indicators.gsub('\'', '"')).sort_by {|k, v| v}
     puts indicators.to_s
-    indicator = indicators.find { |i| i[1] < level }
+    indicator = indicators.find { |i| i[1] > level }
     return -1 unless indicator
     indicator[0]
   end
@@ -49,7 +48,7 @@ class River < ApplicationRecord
       long: long,
       current_indicator: get_current_indicator,
       dot_color: get_dot_color,
-      predicted: has_prediction?
+      predicted: has_prediction?,
     }
   end
 
@@ -133,8 +132,7 @@ class River < ApplicationRecord
     end
 
     def index!
-      all.each do |i|
-        next unless has_prediction?
+      self.all.each do |i|
         i.__elasticsearch__.index_document
       end
     end

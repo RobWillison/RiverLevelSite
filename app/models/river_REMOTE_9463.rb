@@ -134,7 +134,6 @@ class River < ApplicationRecord
 
     def index!
       all.each do |i|
-        next unless has_prediction?
         i.__elasticsearch__.index_document
       end
     end
