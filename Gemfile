@@ -70,3 +70,5 @@ gem "elasticsearch-rails", "~> 5.0"
 
 # Added at 2017-09-22 21:54:31 +0100 by robwillisoon:
 gem "elasticsearch", "~> 5.0"
+
+gem 'twilio-ruby'
