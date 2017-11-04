@@ -28,4 +28,5 @@ class Api::RiversController < ApplicationController
 
     render json: rivers
   end
+
 end

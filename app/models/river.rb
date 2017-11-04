@@ -28,6 +28,10 @@ class River < ApplicationRecord
   def get_current_indicator
     return 'unknown' if get_latest_reading == -1
     level = get_latest_reading.river_level
+    get_idicator(level)
+  end
+
+  def get_idicator(level)
     indicators = JSON.parse(level_indicators.gsub('\'', '"')).sort_by {|k, v| -v}
     indicators << ['empty', 0] if indicators.present?
     indicator = indicators.find { |i| i[1] < level }

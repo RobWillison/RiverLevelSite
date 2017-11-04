@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require bootstrap-slider/dist/bootstrap-slider
 //= require_tree .
+
 
 // Twitter typeahead example.

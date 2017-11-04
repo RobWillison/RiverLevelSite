@@ -1,0 +1,18 @@
+<h2> My Account </h2>
+<div class='col-md-6'>
+<h3> SMS Alerts </h3>
+<% if current_user.sms_enabled %>
+  <table class='table table-striped'>
+    <tr>
+      <th>River</th>
+      <th>Over</th>
+      <th>Within</th>
+    </tr>
+  </table>
+<% else %>
+  <%= form_for :user do |f| %>
+  <%= hidden_field_tag :sms_enabled, true %>
+  <%= f.submit "Enable SMS Alerts", class: 'btn btn-primary' %>
+  <% end %>
+<% end %>
+</div>

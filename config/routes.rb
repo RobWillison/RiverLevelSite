@@ -4,10 +4,15 @@ Rails.application.routes.draw do
   get 'homepage/index'
   root 'homepage#index'
 
+  get 'account', to: 'users/account#show'
+  post 'account', to: 'users/account#edit'
+
   resources :rivers
 
   get 'api/rivers', to: 'api/rivers#all'
   get 'api/rivers/search', to: 'api/rivers#search'
+
+  get 'api/predictions', to: 'api/predictions#all'
 
   get "api/rivers/autocomplete" => "api/rivers#autocomplete"
 

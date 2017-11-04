@@ -20,6 +20,13 @@
           <ul class="nav navbar-nav navbar-left">
             <li><a href="/rivers">Rivers</a></li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <% if user_signed_in? %>
+              <li><a href="/account">My Account</a></li>
+            <% else %>
+              <li><a href="/users/sign_in">Log In</a></li>
+            <% end %>
+          </ul>
           <form class="navbar-form navbar-right">
             <select id="search" class="" type="search" name="states[]" style="display: none;">
             </select>
@@ -27,6 +34,7 @@
         </div>
       </div>
     </nav>
+    <span id="ex18-label-1" class="hidden">Example slider label</span>
     <% if notice %>
       <p class="alert alert-success"><%= notice %></p>
     <% end %>

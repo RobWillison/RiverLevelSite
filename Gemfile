@@ -39,6 +39,7 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'minitest', '~> 5.1'
 end
 
 group :development do
@@ -72,3 +73,5 @@ gem "elasticsearch-rails", "~> 5.0"
 gem "elasticsearch", "~> 5.0"
 
 gem 'twilio-ruby'
+gem 'redis-rails'
+gem 'redis-namespace'

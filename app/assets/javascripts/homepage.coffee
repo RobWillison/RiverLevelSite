@@ -2,6 +2,58 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+sliderSettings = () ->
+  current = new Date();
+  current.setMinutes(0)
+  ticks_labels = []
+  ticks = []
+
+  for i in [0..142]
+    day = current.toString().split(' ')[0]
+    current.setTime(current.getTime() + (1*60*60*1000));
+    console.log(current.getHours())
+    if ticks_labels[ticks_labels.length-1] != day
+      ticks_labels.push(day)
+      ticks.push(i)
+
+  [ticks_labels, ticks]
+
+stepToTime = (value) ->
+  current = new Date()
+  current.setMinutes(0)
+  current.setTime(current.getTime() + (value*60*60*1000));
+  day = current.toString().split(' ')[0]
+  day + ' - ' + String(current.getHours()) + ':00'
+
+initTimeslider = (predictedColours) ->
+  window.predictedColours = predictedColours
+  settings = sliderSettings()
+  $("#timeline").slider({
+      formatter: (value) -> stepToTime(value)
+      ticks: settings[1],
+      ticks_snap_bounds: 0
+  });
+  $('#timeline').change(() ->
+    current = new Date()
+    current.setMinutes(0)
+    current.setSeconds(0)
+    current.setMilliseconds(0)
+    hour = $('#timeline').val()
+    current.setTime(current.getTime() + (hour*60*60*1000));
+    changeTime(JSON.stringify(current))
+  )
+
+changeTime = (time) ->
+  console.log(time)
+  $.each(window.markers, (k, marker) ->
+    data = window.predictedColours[marker.id]
+    newColor = data.find((v) -> newColor = JSON.stringify(v[0]) == time)[1]
+    icon = marker.icon
+    icon.strokeColor = newColor
+    marker.setIcon(icon)
+  )
+
+
 root = exports ? this
 
 root.initMap = () ->
@@ -299,7 +351,13 @@ root.initMap = () ->
     addMarkers
   )
 
+  $.getJSON(
+    url: 'api/predictions',
+    initTimeslider
+  )
+
 addMarkers = (data) ->
+  window.markers = []
   $.each( data, (key, val) ->
     location = new google.maps.LatLng(val.lat, val.long)
     marker = new google.maps.Marker({
@@ -311,9 +369,13 @@ addMarkers = (data) ->
         strokeWeight: 4,
         scale: 2
       }
+      id: val.id
       map: window.map,
     })
     google.maps.event.addListener(marker, 'click', () ->
       window.location.href = this.url
     )
+    window.markers.push(marker)
   )
+
+

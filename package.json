@@ -1,5 +1,7 @@
 {
   "name": "RiverLevelSite",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "bootstrap-slider": "9.9.0"
+  }
 }
