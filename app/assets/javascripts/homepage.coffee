@@ -40,15 +40,14 @@ initTimeslider = (predictedColours) ->
     current.setMilliseconds(0)
     hour = $('#timeline').val()
     current.setTime(current.getTime() + (hour*60*60*1000));
-    changeTime(JSON.stringify(current))
+    changeTime(current)
   )
 
 changeTime = (time) ->
-  console.log(time)
+  time.setTime(time.getTime() - 1);
   $.each(window.markers, (k, marker) ->
     data = window.predictedColours[marker.id]
-    console.log(data)
-    newColor = data.find((v) -> newColor = JSON.stringify(v[0]) == time)[1]
+    newColor = data.find((v) -> new Date(v[0]) > time)[1]
     icon = marker.icon
     icon.strokeColor = newColor
     marker.setIcon(icon)
