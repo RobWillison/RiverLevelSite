@@ -44,10 +44,14 @@ initTimeslider = (predictedColours) ->
   )
 
 changeTime = (time) ->
-  time.setTime(time.getTime() - 1);
+  time.setTime(time.getTime() + 1);
   $.each(window.markers, (k, marker) ->
     data = window.predictedColours[marker.id]
-    newColor = data.find((v) -> new Date(v[0]) > time)
+    newColor = undefined
+    data.each((v) ->
+      newColor if new Date(v[0]) < time
+    )
+
     newColor = newColor[1] if newColor != undefined
     newColor = '#D3D3D3' if newColor == undefined
     icon = marker.icon
