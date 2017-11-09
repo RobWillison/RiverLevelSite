@@ -52,8 +52,6 @@ changeTime = (time) ->
     for v in data
       newColor = v[1] if new Date(v[0]) < time
 
-    newColor = newColor[1] if newColor != undefined
-    newColor = '#D3D3D3' if newColor == undefined
     icon = marker.icon
     icon.strokeColor = newColor
     marker.setIcon(icon)
