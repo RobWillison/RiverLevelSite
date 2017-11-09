@@ -47,6 +47,7 @@ changeTime = (time) ->
   console.log(time)
   $.each(window.markers, (k, marker) ->
     data = window.predictedColours[marker.id]
+    console.log(data)
     newColor = data.find((v) -> newColor = JSON.stringify(v[0]) == time)[1]
     icon = marker.icon
     icon.strokeColor = newColor
