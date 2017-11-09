@@ -48,9 +48,9 @@ changeTime = (time) ->
   $.each(window.markers, (k, marker) ->
     data = window.predictedColours[marker.id]
     newColor = undefined
-    
+
     for v in data
-      newColor if new Date(v[0]) < time
+      newColor = v[1] if new Date(v[0]) < time
 
     newColor = newColor[1] if newColor != undefined
     newColor = '#D3D3D3' if newColor == undefined
