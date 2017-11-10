@@ -15,4 +15,6 @@
   <%= f.submit "Enable SMS Alerts", class: 'btn btn-primary' %>
   <% end %>
 <% end %>
+
+<%= link_to('Logout', destroy_user_session_path, method: :delete) %>
 </div>
