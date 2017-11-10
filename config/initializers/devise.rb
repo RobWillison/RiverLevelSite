@@ -250,7 +250,16 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  config.omniauth :facebook, ENV['FACEBOOK_ID'], ENV['FACEBOOK_SECRET'], callback_url: "http://localhost:3000/users/auth/facebook/callback"
+  config.omniauth :facebook,
+    ENV['FACEBOOK_ID'],
+    ENV['FACEBOOK_SECRET'],
+    callback_url: "http://localhost/users/auth/facebook/callback",
+    token_params: { parse: :json },
+    scope: "email",
+    info_fields: "name, email",
+    display: 'popup'
+  }
+
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
