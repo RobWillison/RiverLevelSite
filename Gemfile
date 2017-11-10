@@ -75,3 +75,8 @@ gem "elasticsearch", "~> 5.0"
 gem 'twilio-ruby'
 gem 'redis-rails'
 gem 'redis-namespace'
+
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'bootstrap-social-rails'
+gem 'font-awesome-rails'

@@ -92,4 +92,7 @@ Rails.application.configure do
   ENV["TWILIO_SID"] = '??'
   ENV["TWILIO_AUTH"] = '??'
   ENV["TWILIO_NUMBER"] = '+441256830502'
+
+  ENV["FACEBOOK_ID"] = '??'
+  ENV["FACEBOOK_SECRET"] = '??'
 end
