@@ -346,7 +346,8 @@ root.initMap = () ->
   window.map = new google.maps.Map(
     document.getElementById('map'),
     {center: {lat: 54.559322, lng: -4.174804},
-    zoom: 6}
+    zoom: 6,
+    disableDefaultUI: true}
   )
 
   map.set('styles', style)

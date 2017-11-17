@@ -258,7 +258,6 @@ Devise.setup do |config|
     scope: "email",
     info_fields: "name, email",
     display: 'popup'
-  }
 
 
   # ==> Warden configuration
