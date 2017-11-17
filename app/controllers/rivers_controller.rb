@@ -1,6 +1,6 @@
 class RiversController < ApplicationController
   def index
-    @rivers = River.all
+    @rivers = River.all.reject { |r| !r.has_prediction? }
   end
 
   def show

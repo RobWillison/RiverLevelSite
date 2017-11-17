@@ -1,8 +1,26 @@
 
+<div class="container">
+  <center><h1>Rivers</h1></center>
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <table class="table table-striped">
+      <thead>
+        <td>River</td>
+        <td>Current Level</td>
+        <td>Currently</td>
+      </thead>
+      <tbody>
+        <% @rivers.each do |river| %>
+        <tr>
+          <td> <%= link_to(river.name, river) %> </td>
+          <td> <%= number_with_precision(river.get_latest_reading.river_level, precision: 2) %> </td>
+          <td style="background-color: <%= river.get_dot_color(colors: ['#FF8282', '#FF9370', '#FFE278', '#AFFAAF', '#91FF91', '#71BF71', '#111111']) %>">
+            <%= river.get_current_indicator.capitalize %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </div>
+  </div>
+</div>
 
-<h1>Rivers</h1>
-<ul>
-<% @rivers.each do |river| %>
-<li> <%= link_to(river.name, river) %> </li>
-<% end %>
-</ul>

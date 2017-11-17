@@ -57,22 +57,22 @@ class River < ApplicationRecord
     }
   end
 
-  def get_dot_color(level=get_current_indicator)
+  def get_dot_color(level=get_current_indicator, colors: [])
     case level
     when 'empty'
-      '#FF0000'
+      colors[0] || '#FF0000'
     when 'scrape'
-      '#FF5721'
+      colors[1] || '#FF5721'
     when 'low'
-      '#FFCC11'
+      colors[2] || '#FFCC11'
     when 'medium'
-      '#98FB98'
+      colors[3] || '#98FB98'
     when 'high'
-      '#00FF00'
+      colors[4] || '#00FF00'
     when 'huge'
-      '#228B22'
+      colors[5] || '#228B22'
     else
-      '#D3D3D3'
+      colors[6] || '#D3D3D3'
     end
   end
 
