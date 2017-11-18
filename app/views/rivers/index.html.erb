@@ -12,13 +12,13 @@
         </tr>
       </thead>
       <tbody>
-        <% @rivers.each do |river| %>
+        <% @rivers_data.each do |river| %>
         <tr data-href='<%= url_for(river)%>' >
-          <td> <%= river.name %> </td>
-          <td> <%= number_with_precision(river.get_latest_reading.river_level, precision: 2) %> </td>
+          <td> <%= river['name'] %> </td>
+          <td> <%= number_with_precision(river['level'], precision: 2) %> </td>
           <th>
-            <span class="badge" style="background-color: <%= river.get_dot_color %>">
-              <%= river.get_current_indicator.capitalize %>
+            <span class="badge" style="background-color: <%= river['color'] %>">
+              <%= river['indicator'].capitalize %>
             </span>
           </td>
         </tr>

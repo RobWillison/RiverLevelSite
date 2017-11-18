@@ -1,6 +1,16 @@
 class RiversController < ApplicationController
   def index
-    @rivers = River.all.reject { |r| !r.has_prediction? }
+    @rivers_data = JSON.load $redis.get("river-data-index")
+    if @rivers_data.nil?
+      rivers = River.all.reject { |r| !r.has_prediction? }
+      @rivers_data = rivers.collect {|r| {
+        'name' => r.name,
+        'level' => r.get_latest_reading.river_level,
+        'indicator' => r.get_current_indicator,
+        'color' => r.get_dot_color
+        }}
+      $redis.set("river-data-index", @rivers_data.to_json)
+    end
   end
 
   def show
