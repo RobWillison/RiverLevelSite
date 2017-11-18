@@ -5,7 +5,8 @@ end
 
 task update_cache: [:environment] do
   $redis.keys.each do |key|
-    if key =~ /prediction/
+    case key
+    when /prediction/
       $redis.del(key)
       puts "Removed key #{key}"
       id = key[/[0-9]*$/].to_i
@@ -14,6 +15,8 @@ task update_cache: [:environment] do
 
       $redis.set(key, predict_data.to_json)
       puts "Setting key #{key}"
+    when /river-data-index/
+      $redis.del(key)
     end
   end
 end
