@@ -13,7 +13,7 @@
       </thead>
       <tbody>
         <% @rivers_data.each do |river| %>
-        <tr data-href='<%= url_for(river)%>' >
+        <tr data-href='<%= river['url']%>' >
           <td> <%= river['name'] %> </td>
           <td> <%= number_with_precision(river['level'], precision: 2) %> </td>
           <th>

@@ -1,4 +1,6 @@
 class RiversController < ApplicationController
+  include Rails.application.routes.url_helpers
+
   def index
     @rivers_data = JSON.load $redis.get("river-data-index")
     if @rivers_data.nil?
@@ -7,7 +9,8 @@ class RiversController < ApplicationController
         'name' => r.name,
         'level' => r.get_latest_reading.river_level,
         'indicator' => r.get_current_indicator,
-        'color' => r.get_dot_color
+        'color' => r.get_dot_color,
+        'url' => url_for(r)
         }}
       $redis.set("river-data-index", @rivers_data.to_json)
     end
