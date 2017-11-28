@@ -41,7 +41,7 @@ class Prediction < ApplicationRecord
   end
 
   def get_prediction_data
-    sql = 'SELECT predict_time, river_level FROM predicted_river_levels WHERE prediction_id = ? AND predict_time > DATE(NOW()) ORDER BY predict_time'
+    sql = 'SELECT predict_time, river_level FROM predicted_river_levels WHERE prediction_id = ? AND predict_time ORDER BY predict_time'
     query = ActiveRecord::Base.connection.raw_connection.prepare(sql)
     results_array = query.execute(id)
 
