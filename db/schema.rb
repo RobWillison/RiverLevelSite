@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171110173615) do
+ActiveRecord::Schema.define(version: 20171128194007) do
 
   create_table "gatherers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
@@ -28,6 +28,15 @@ ActiveRecord::Schema.define(version: 20171110173615) do
     t.string "priority", limit: 45
     t.string "error_message", limit: 1024
     t.index ["call"], name: "check_call", unique: true
+  end
+
+  create_table "model_configs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.integer "lstm_layers"
+    t.integer "dense_layers"
+    t.integer "epochs"
+    t.integer "default"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "predicted_river_levels", id: :integer, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
