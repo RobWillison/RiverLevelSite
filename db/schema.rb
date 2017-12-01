@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171201180455) do
+ActiveRecord::Schema.define(version: 20171201200232) do
 
   create_table "gatherers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
@@ -45,11 +45,12 @@ ActiveRecord::Schema.define(version: 20171201180455) do
     t.string "model_path"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.binary "scalers"
+    t.boolean "live"
     t.index ["river_id", "model_config_id"], name: "unique", unique: true
   end
 
   create_table "predicted_river_levels", id: :integer, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
-    t.integer "river_id", null: false
     t.datetime "predict_time", null: false
     t.float "river_level", limit: 24, null: false
     t.integer "prediction_id"

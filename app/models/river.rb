@@ -81,7 +81,9 @@ class River < ApplicationRecord
   end
 
   def has_prediction?
-    Prediction.where(river_id: id, live: 1).present?
+    config = ModelConfig.find_by(default: 1)
+    model = Model.where(model_config_id: config.id, river_id: id).first
+    Prediction.where(model_id: model.id).present? if model.present?
   end
 
   def jobs?
