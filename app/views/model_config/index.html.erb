@@ -1,0 +1,20 @@
+<h1> Model Configs </h1>
+
+<table class='table table-striped'>
+  <tr>
+    <th>Id</th>
+    <th>LSTM layers</th>
+    <th>Dense layers</th>
+    <th>Epochs</th>
+    <th>Created At</th>
+  </tr>
+<% @configs.each do |config| %>
+  <tr style= <%= config.default ? 'background-color:#98FB98' : '' %>>
+    <td><%= config.id %></td>
+    <td><%= config.lstm_layers %></td>
+    <td><%= config.dense_layers %></td>
+    <td><%= config.epochs %></td>
+    <td><%= config.created_at %></td>
+  </tr>
+<% end %>
+</table>

@@ -32,4 +32,6 @@ Rails.application.routes.draw do
   get "admin/predict" => "predict#index"
   get "admin/predict/:id" => "predict#show"
 
+  get "admin/model_config" => "model_config#index"
+
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171128201748) do
+ActiveRecord::Schema.define(version: 20171201180455) do
 
   create_table "gatherers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20171128201748) do
     t.string "model_path"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["river_id", "model_config_id"], name: "unique", unique: true
   end
 
   create_table "predicted_river_levels", id: :integer, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
@@ -58,9 +59,10 @@ ActiveRecord::Schema.define(version: 20171128201748) do
     t.datetime "created_date"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.integer "river_id"
+    t.integer "model_id"
     t.binary "acuracy_info"
-    t.index ["river_id"], name: "unique"
+    t.boolean "live"
+    t.index ["model_id"], name: "unique"
   end
 
   create_table "rain_data", id: :integer, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|

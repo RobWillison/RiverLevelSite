@@ -1,0 +1,3 @@
+class PredictedRiverLevel < ApplicationRecord
+
+end

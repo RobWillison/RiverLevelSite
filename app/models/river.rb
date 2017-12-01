@@ -81,7 +81,7 @@ class River < ApplicationRecord
   end
 
   def has_prediction?
-    Prediction.where(river_id: id).present?
+    Prediction.where(river_id: id, live: 1).present?
   end
 
   def jobs?
