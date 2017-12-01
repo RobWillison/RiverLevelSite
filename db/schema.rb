@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171128194007) do
+ActiveRecord::Schema.define(version: 20171128201748) do
 
   create_table "gatherers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
@@ -35,6 +35,14 @@ ActiveRecord::Schema.define(version: 20171128194007) do
     t.integer "dense_layers"
     t.integer "epochs"
     t.integer "default"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "models", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.integer "river_id"
+    t.integer "model_config_id"
+    t.string "model_path"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
