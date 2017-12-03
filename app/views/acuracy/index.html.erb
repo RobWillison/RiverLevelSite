@@ -1,0 +1,20 @@
+<table class='table table-striped'>
+  <tr>
+    <th>Model Config Id</th>
+    <th>Num Predictions</th>
+    <th>Avg 1 hour</th>
+    <th>Avg 12 hour</th>
+    <th>Avg 24 hour</th>
+    <th>Avg 48 hour</th>
+  </tr>
+<% @model_acuracy.each do |config, total, acuracy| %>
+  <tr>
+    <td><%= config.id %></td>
+    <td><%= total %></td>
+    <td><%= acuracy[0] %>%</td>
+    <td><%= acuracy[11] %>%</td>
+    <td><%= acuracy[23] %>%</td>
+    <td><%= acuracy[47] %>%</td>
+  </tr>
+<% end %>
+</table>

@@ -34,4 +34,6 @@ Rails.application.routes.draw do
 
   get "admin/model_config" => "model_config#index"
 
+  get "admin/acuracy" => "acuracy#index"
+
 end
