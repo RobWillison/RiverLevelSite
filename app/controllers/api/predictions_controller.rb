@@ -7,8 +7,7 @@ class Api::PredictionsController < ApplicationController
       predict_data = JSON.load $redis.get("prediction#{river.id}")
       if predict_data.nil?
         config = ModelConfig.find_by(default: 1)
-        model = Model.where(model_config_id: config.id, river_id: river.id).first
-        prediction = Prediction.order(created_at: :desc).where(model_id: model.id).limit(1).first
+        prediction = Prediction.joins(:model).where(models: {model_config_id: config.id, river_id: river.id}).order(id: :desc).first
         predict_data = prediction.get_prediction_data
 
         $redis.set("prediction#{river.id}", predict_data.to_json)
