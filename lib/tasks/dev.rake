@@ -11,8 +11,7 @@ task update_cache: [:environment] do
       puts "Removed key #{key}"
       id = key[/[0-9]*$/].to_i
       config = ModelConfig.find_by(default: 1)
-      model = Model.where(model_config_id: config.id, river_id: id).first
-      prediction = Prediction.order(id: :desc).where(model_id: model.id).limit(1).first
+      prediction = Prediction.joins(:model).where(models: {model_config_id: config.id, river_id: id}).order(id: :desc).first
       predict_data = prediction.get_prediction_data
 
       $redis.set(key, predict_data.to_json)
