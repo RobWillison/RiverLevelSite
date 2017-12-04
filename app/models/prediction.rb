@@ -1,5 +1,7 @@
 class Prediction < ApplicationRecord
 
+  belongs_to :model
+
   def acuracy
     {
       hour1: acuracy_after_hours(1),

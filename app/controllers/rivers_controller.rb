@@ -19,13 +19,14 @@ class RiversController < ApplicationController
   def show
     @river = River.find(params[:id])
     config = ModelConfig.find_by(default: 1)
-    model = Model.where(model_config_id: config.id, river_id: @river.id).first
-    @prediction = Prediction.where(model_id: model.id, live: 1).order(id: :desc).first
+    @prediction = Prediction.joins(:model).where(models: {model_config_id: config.id, river_id: params[:id]}).order(id: :desc).first
+    raise @prediction.to_s
     if @prediction
       @river_data = @prediction.get_prediction_data
       @river_data[:timestamps] = @river_data[:timestamps].map { |i| i.to_formatted_s(:db) }
     end
 
     @levels = @river.get_level_indicators_with_color.map {|i| {y: i[:value], text: i[:text], style: i[:color]}}
+
   end
 end
