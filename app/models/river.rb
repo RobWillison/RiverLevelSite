@@ -82,8 +82,8 @@ class River < ApplicationRecord
 
   def has_prediction?
     config = ModelConfig.find_by(default: 1)
-    model = Model.where(model_config_id: config.id, river_id: id).first
-    Prediction.where(model_id: model.id).present? if model.present?
+    prediction = Prediction.joins(:model).where(models: {model_config_id: config.id, river_id: id}).order(id: :desc).first
+    prediction.present?
   end
 
   def jobs?
