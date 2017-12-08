@@ -42,16 +42,19 @@ class RiversController < ApplicationController
                                      .where(predictions: {river_id: @river.id})
 
     predicted_data = predictions.pluck(:predict_time, :river_level, :prediction_id)
-    prediction_ids = predictions.pluck(:prediction_id).uniq
+    prediction_ids = predictions.pluck(:prediction_id, :created_date).uniq
 
     @river_data = {}
     @river_data[:timestamps] = river_data.collect { |reading| reading[0] }
     @river_data[:real_levels] = river_data.collect { |reading| {x: reading[0], y: reading[1] }}
-    @river_data[:predicted_level] = prediction_ids.collect do |pred_id|
-      predicted_data.collect do |data|
-        next if data[2] != pred_id
-        {x: data[0], y: data[1]}
-      end.reject(&:nil?)
+    @river_data[:predicted_level] = prediction_ids.collect do |pred_id, created|
+      {
+        data: predicted_data.collect { |data|
+                next if data[2] != pred_id
+                {x: data[0], y: data[1]}
+              }.reject(&:nil?),
+        date: created
+      }
     end
   end
 end
