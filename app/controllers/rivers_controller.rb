@@ -49,7 +49,6 @@ class RiversController < ApplicationController
     @river_data[:predicted_level] = @river_data[:timestamps].collect do |date|
       predictions = predicted_data.find_all { |pred| pred[0] == date}
       next if predictions.empty?
-
       prediction = predictions.find { |pred| pred[2] <= date - 1.hour}
       next if prediction.nil?
       {x: prediction[0], y: prediction[1]}
