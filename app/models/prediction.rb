@@ -1,5 +1,5 @@
 class Prediction < ApplicationRecord
-
+  has_many :predicted_river_levels
   belongs_to :model
 
   def acuracy

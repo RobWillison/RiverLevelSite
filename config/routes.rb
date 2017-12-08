@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   get 'account', to: 'users/account#show'
   post 'account', to: 'users/account#edit'
 
-  resources :rivers
+  resources :rivers do
+    member do
+      get 'history'
+    end
+  end
 
   get 'api/rivers', to: 'api/rivers#all'
   get 'api/rivers/search', to: 'api/rivers#search'

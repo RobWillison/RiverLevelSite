@@ -27,6 +27,33 @@ class RiversController < ApplicationController
     end
 
     @levels = @river.get_level_indicators_with_color.map {|i| {y: i[:value], text: i[:text], style: i[:color]}}
+  end
+
+  def history
+    @river = River.find(params[:id])
+    start_date = 7.days.ago
+    end_date = Time.now.utc
+
+    river_data = RiverData.where('time_string BETWEEN ? AND ?', start_date, end_date)
+                            .where(river_id: @river.id).pluck(:time_string, :river_level)
+
+    predicted_data = PredictedRiverLevel.joins(:prediction)
+                                        .where('predict_time BETWEEN ? AND ?', start_date, end_date)
+                                        .where(predictions: {river_id: @river.id})
+                                        .order(prediction_id: :desc)
+                                        .pluck(:predict_time, :river_level, :created_at)
+
+    @river_data = {}
+    @river_data[:timestamps] = river_data.collect { |reading| reading[0] }
+    @river_data[:real_levels] = river_data.collect { |reading| {x: reading[0], y: reading[1] }}
+    @river_data[:predicted_level] = @river_data[:timestamps].collect do |date|
+      predictions = predicted_data.find_all { |pred| pred[0] == date}
+      next if predictions.empty?
+
+      prediction = predictions.find { |pred| pred[2] - 1.hour <= date}
+      next if prediction.nil?
+      {x: prediction[0], y: prediction[1]}
+    end
 
   end
 end
