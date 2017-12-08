@@ -50,7 +50,7 @@ class RiversController < ApplicationController
       predictions = predicted_data.find_all { |pred| pred[0] == date}
       next if predictions.empty?
 
-      prediction = predictions.find { |pred| pred[2] - 1.hour <= date}
+      prediction = predictions.find { |pred| pred[2] <= date - 1.hour}
       next if prediction.nil?
       {x: prediction[0], y: prediction[1]}
     end
