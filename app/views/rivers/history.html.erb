@@ -60,15 +60,10 @@ new Chart(document.getElementById("line-chart"), {
   type: 'line',
   data: {
     labels: $('#line-chart').data('timestamps'),
-    datasets: [{
+    datasets: $.merge([{
         data: $('#line-chart').data('real'),
         label: "Actual River Level",
         borderColor: "#3e95cd",
-        fill: false
-      }, {
-        data: $('#line-chart').data('forecast'),
-        label: "Forecast River Level",
-        borderColor: "#8e5ea2",
         fill: false
       }, {
         data: $('#line-chart').data('rain'),
@@ -76,7 +71,9 @@ new Chart(document.getElementById("line-chart"), {
         borderColor: "#FF69B4",
         fill: false
       }
-    ]
+    ], $('#line-chart').data('forecast').map(function(p) {
+      return {data: p, label: 'Prediction', borderColor: "#"+((1<<24)*Math.random()|0).toString(16), fill: false}
+    }))
   },
   options: {
     horizontalLine: <%= @levels.to_json.html_safe %>,
