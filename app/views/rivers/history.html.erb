@@ -72,7 +72,7 @@ new Chart(document.getElementById("line-chart"), {
         fill: false
       }
     ], $('#line-chart').data('forecast').map(function(p) {
-      return {data: p, label: 'Prediction', borderColor: "#"+((1<<24)*Math.random()|0).toString(16), fill: false}
+      return {data: p, label: 'Prediction', borderColor: "#"+((1<<24)*Math.random()|0).toString(16), fill: false, showLine: false}
     }))
   },
   options: {
