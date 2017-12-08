@@ -41,7 +41,7 @@ class RiversController < ApplicationController
                                         .where('predict_time BETWEEN ? AND ?', start_date, end_date)
                                         .where(predictions: {river_id: @river.id})
                                         .order(prediction_id: :desc)
-                                        .pluck(:predict_time, :river_level, :created_at)
+                                        .pluck(:predict_time, :river_level, :created_date)
 
     @river_data = {}
     @river_data[:timestamps] = river_data.collect { |reading| reading[0] }
