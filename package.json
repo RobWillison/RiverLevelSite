@@ -2,6 +2,7 @@
   "name": "RiverLevelSite",
   "private": true,
   "dependencies": {
-    "bootstrap-slider": "9.9.0"
+    "bootstrap-slider": "9.9.0",
+    "spinkit": "^1.2.5"
   }
 }
