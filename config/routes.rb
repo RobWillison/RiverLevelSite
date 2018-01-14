@@ -9,9 +9,7 @@ Rails.application.routes.draw do
   post 'account', to: 'users/account#edit'
 
   resources :rivers do
-    member do
-      get 'history'
-    end
+    resources :history
   end
 
   get 'api/rivers', to: 'api/rivers#all'

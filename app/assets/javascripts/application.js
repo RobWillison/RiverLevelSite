@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require moment/min/moment.min.js
 //= require bootstrap-sprockets
 //= require bootstrap-slider/dist/bootstrap-slider
 //= require_tree .

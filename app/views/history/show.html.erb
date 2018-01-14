@@ -1,0 +1,69 @@
+<center><h1> <%= @river.name %></h1><center>
+<center><h2>( <%= @river.get_latest_reading.river_level %> - <%= distance_of_time_in_words(@river.get_latest_reading.time_string.to_time, Time.now) %> ago )</h2></center>
+<% if @river_data %>
+<div width="80" height="450">
+  <canvas id="line-chart" width="800" height="450"
+    data-timestamps="<%= @river_data[:timestamps].to_json %>"
+    data-real="<%= @river_data[:real_levels].to_json %>"
+    data-forecast="<%= @river_data[:predicted_level].to_json %>"
+    data-rain="<%= @river_data[:rain_level].to_json %>"></canvas>
+</div>
+<script>
+
+dates = $.map($('#line-chart').data('timestamps'), function(val) {
+  return moment(val, "YYYY-MM-DDTHH:mm:ss.SSSZ")
+})
+
+river = $.map($('#line-chart').data('real'), function(val) {
+  return {x: moment(val.x, "YYYY-MM-DDTHH:mm:ss.SSSZ"), y: val.y}
+})
+
+forecast = $.map($('#line-chart').data('forecast'), function(val) {
+  return {x: moment(val.x, "YYYY-MM-DDTHH:mm:ss.SSSZ"), y: val.y}
+})
+
+new Chart(document.getElementById("line-chart"), {
+  type: 'line',
+  data: {
+    labels: dates,
+    datasets: [{
+        data: river,
+        label: "Actual River Level",
+        borderColor: "#3e95cd"
+      }, {
+        data: forecast,
+        label: "Predicted",
+        borderColor: "#FF69B4"
+      }]
+  },
+  options: {
+    horizontalLine: <%= @levels.to_json.html_safe %>,
+    maintainAspectRatio: true,
+    responsive: false,
+    legend: {
+      display: false,
+    },
+    scales: {
+      xAxes: [{
+						type: "time",
+						time: {
+							format: 'MM/DD/YYYY HH:mm',
+							// round: 'day'
+							tooltipFormat: 'll HH:mm'
+						},
+						scaleLabel: {
+							display: true,
+							labelString: 'Date'
+						}
+			}],
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+          max: 2
+        }
+      }]
+    }
+  }
+});
+</script>
+<% end %>
