@@ -95,6 +95,20 @@ class River < ApplicationRecord
     return station.present? && rain_radar_area_id.present? && source_agency == 'ea'
   end
 
+  def get_acuracy_info
+    average = Hash.new(0)
+    infos = Prediction.where(river_id: id)
+                      .where.not(acuracy_info: nil)
+                      .order(id: :desc).limit(5).pluck(:acuracy_info)
+                      .collect { |acuracy| JSON.load(acuracy)}
+
+    infos.map do |acuracy|
+      acuracy.map { |k, v| average[k] += v}
+    end
+
+    average.update(average) { |key, value| value / infos.count }
+  end
+
   class << self
 
     def ready_to_predict
