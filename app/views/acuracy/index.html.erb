@@ -1,15 +1,17 @@
 <table class='table table-striped'>
   <tr>
-    <th>Model Config Id</th>
+    <th>River Name</th>
+    <th>River Id</th>
     <th>Num Predictions</th>
     <th>Avg 1 hour</th>
     <th>Avg 12 hour</th>
     <th>Avg 24 hour</th>
     <th>Avg 48 hour</th>
   </tr>
-<% @model_acuracy.each do |config, total, acuracy| %>
+<% @model_acuracy.each do |river_id, river_name, total, acuracy| %>
   <tr>
-    <td><%= config.id %></td>
+    <td><%= river_id %></td>
+    <td><%= river_name %></td>
     <td><%= total %></td>
     <td><%= acuracy[0] %>%</td>
     <td><%= acuracy[11] %>%</td>

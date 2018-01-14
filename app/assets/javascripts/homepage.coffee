@@ -2,15 +2,18 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+$(window).on('loaded', () ->
+  $('.overlay').fadeOut('slow') if window.timelineLoaded && window.markersLoaded)
+
 sliderSettings = () ->
-  current = new Date();
+  current = new Date()
   current.setMinutes(0)
   ticks_labels = []
   ticks = []
 
   for i in [0..142]
     day = current.toString().split(' ')[0]
-    current.setTime(current.getTime() + (1*60*60*1000));
+    current.setTime(current.getTime() + (1*60*60*1000))
     console.log(current.getHours())
     if ticks_labels[ticks_labels.length-1] != day
       ticks_labels.push(day)
@@ -21,7 +24,7 @@ sliderSettings = () ->
 stepToTime = (value) ->
   current = new Date()
   current.setMinutes(0)
-  current.setTime(current.getTime() + (value*60*60*1000));
+  current.setTime(current.getTime() + (value*60*60*1000))
   day = current.toString().split(' ')[0]
   day + ' - ' + String(current.getHours()) + ':00'
 
@@ -29,22 +32,26 @@ initTimeslider = (predictedColours) ->
   window.predictedColours = predictedColours
   settings = sliderSettings()
   $("#timeline").slider({
-      formatter: (value) -> stepToTime(value)
-      ticks: settings[1],
-      ticks_snap_bounds: 0
-  });
+    formatter: (value) -> stepToTime(value)
+    ticks: settings[1],
+    ticks_snap_bounds: 0
+  })
+
   $('#timeline').change(() ->
     current = new Date()
     current.setMinutes(0)
     current.setSeconds(0)
     current.setMilliseconds(0)
     hour = $('#timeline').val()
-    current.setTime(current.getTime() + (hour*60*60*1000));
+    current.setTime(current.getTime() + (hour*60*60*1000))
     changeTime(current)
   )
 
+  window.timelineLoaded = true
+  $(window).trigger('loaded')
+
 changeTime = (time) ->
-  time.setTime(time.getTime() + 1);
+  time.setTime(time.getTime() + 1)
   $.each(window.markers, (k, marker) ->
     data = window.predictedColours[marker.id]
     newColor = undefined
@@ -382,5 +389,5 @@ addMarkers = (data) ->
     )
     window.markers.push(marker)
   )
-
-
+  window.markersLoaded = true
+  $(window).trigger('loaded')
