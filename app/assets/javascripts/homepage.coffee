@@ -34,7 +34,8 @@ initTimeslider = (predictedColours) ->
   $("#timeline").slider({
     formatter: (value) -> stepToTime(value)
     ticks: settings[1],
-    ticks_snap_bounds: 0
+    ticks_snap_bounds: 0,
+    value: 0
   })
 
   $('#timeline').change(() ->
@@ -46,6 +47,7 @@ initTimeslider = (predictedColours) ->
     current.setTime(current.getTime() + (hour*60*60*1000))
     changeTime(current)
   )
+  $('#timeline').trigger('change')
 
   window.timelineLoaded = true
   $(window).trigger('loaded')
@@ -363,12 +365,12 @@ root.initMap = () ->
     addMarkers
   )
 
+addMarkers = (data) ->
   $.getJSON(
     url: 'api/predictions',
     initTimeslider
   )
 
-addMarkers = (data) ->
   window.markers = []
   $.each( data, (key, val) ->
     location = new google.maps.LatLng(val.lat, val.long)
