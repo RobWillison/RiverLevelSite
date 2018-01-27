@@ -21,11 +21,9 @@
             <li><a href="/rivers">Rivers</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <% if user_signed_in? %>
-              <li><a href="/account">My Account</a></li>
-            <% else %>
-              <li><a href="/users/sign_in">Log In</a></li>
-            <% end %>
+              <a href="https://darksky.net/poweredby/">
+                <img class="navbar-brand" src="assets/poweredby.png">
+              </a>
           </ul>
           <form class="navbar-form navbar-right">
             <select id="search" class="" type="search" name="states[]" style="display: none;">

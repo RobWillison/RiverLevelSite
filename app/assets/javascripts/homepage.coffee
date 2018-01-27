@@ -39,12 +39,12 @@ initTimeslider = (predictedColours) ->
   })
 
   $('#timeline').change(() ->
-    current = new Date()
-    current.setMinutes(0)
-    current.setSeconds(0)
-    current.setMilliseconds(0)
+    current = new moment()
+    current.minutes(0)
+    current.seconds(0)
+    current.millisecond(0)
     hour = $('#timeline').val()
-    current.setTime(current.getTime() + (hour*60*60*1000))
+    current.add(hour, 'hours');
     changeTime(current)
   )
   $('#timeline').trigger('change')
@@ -53,7 +53,8 @@ initTimeslider = (predictedColours) ->
   $(window).trigger('loaded')
 
 changeTime = (time) ->
-  time.setTime(time.getTime() + 1)
+  updateOverlay(time)
+  time.add(1, 'seconds')
   $.each(window.markers, (k, marker) ->
     data = window.predictedColours[marker.id]
     newColor = undefined
@@ -393,3 +394,41 @@ addMarkers = (data) ->
   )
   window.markersLoaded = true
   $(window).trigger('loaded')
+
+hideOverlay = () ->
+window.current_overlay = {}
+window.overlay = {}
+updateOverlay = (time) ->
+  console.log(time)
+  timestamp = time.unix()
+  showOverlay(timestamp)
+
+showOverlay = (timestamp) ->
+  if window.overlay[timestamp] == undefined
+    buildOverlay(timestamp.toString())
+
+  for overlay in window.current_overlay
+    if overlay.div_ != null
+      overlay.div_.style.visibility = 'hidden';
+
+  window.current_overlay = window.overlay[timestamp]
+
+  for overlay in window.overlay[timestamp]
+    if overlay.div_ != null
+      overlay.div_.style.visibility = 'visible';
+
+buildOverlay = (timestamp) ->
+  data = [[52.497772, -5.576685, 55.797614, 0.033960, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/31/20.png'],
+  [52.497772, -11.2, 55.797614, -5.576685, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/30/20.png'],
+  [55.797614, -5.576685, 58.797614, 0.033960, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/31/19.png'],
+  [55.797614, -11.2, 58.797614, -5.576685, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/30/19.png'],
+  [55.797614, -16.5, 58.797614, -11.2, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/29/19.png'],
+  [52.497772, -16.5, 55.797614, -11.2, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/29/20.png'],
+  [52.497772, 0.033960, 55.797614, 5.5, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/32/20.png'],
+  [55.797614, 0.033960, 58.797614, 5.5, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/32/19.png'],
+  [49, 0.033960, 52.497772, 5.5, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/32/21.png'],
+  [49, -5.576685, 52.497772, 0.033960, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/31/21.png'],
+  [49, -11.2, 52.497772, -5.576685, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/30/21.png'],
+  [49, -16.5, 52.497772, -11.2, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/29/21.png']]
+
+  window.overlay[timestamp] = initOverlay(data)
