@@ -43,6 +43,7 @@ function initOverlay(data) {
   USGSOverlay.prototype.onAdd = function() {
 
     var div = document.createElement('div');
+    div.className += 'overlay-pane'
     div.style.border = 'none';
     div.style.borderWidth = '0px';
     div.style.position = 'absolute';

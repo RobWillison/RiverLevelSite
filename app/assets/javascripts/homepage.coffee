@@ -407,9 +407,9 @@ showOverlay = (timestamp) ->
   if window.overlay[timestamp] == undefined
     buildOverlay(timestamp.toString())
 
-  for overlay in window.current_overlay
-    if overlay.div_ != null
-      overlay.div_.style.visibility = 'hidden';
+  $('.overlay-pane').each(() ->
+      this.style.visibility = 'hidden';
+    )
 
   window.current_overlay = window.overlay[timestamp]
 
