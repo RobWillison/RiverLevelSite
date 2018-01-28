@@ -418,17 +418,17 @@ showOverlay = (timestamp) ->
       overlay.div_.style.visibility = 'visible';
 
 buildOverlay = (timestamp) ->
-  data = [[52.497772, -5.576685, 55.797614, 0.033960, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/31/20.png'],
-  [52.497772, -11.2, 55.797614, -5.576685, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/30/20.png'],
-  [55.797614, -5.576685, 58.797614, 0.033960, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/31/19.png'],
-  [55.797614, -11.2, 58.797614, -5.576685, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/30/19.png'],
-  [55.797614, -16.5, 58.797614, -11.2, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/29/19.png'],
-  [52.497772, -16.5, 55.797614, -11.2, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/29/20.png'],
-  [52.497772, 0.033960, 55.797614, 5.5, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/32/20.png'],
-  [55.797614, 0.033960, 58.797614, 5.5, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/32/19.png'],
-  [49, 0.033960, 52.497772, 5.5, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/32/21.png'],
-  [49, -5.576685, 52.497772, 0.033960, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/31/21.png'],
-  [49, -11.2, 52.497772, -5.576685, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/30/21.png'],
-  [49, -16.5, 52.497772, -11.2, 'https://maps8.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/29/21.png']]
+  data = [[52.497772, -5.576685, 55.797614, 0.033960, 'https://maps.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/31/20.png'],
+  [52.497772, -11.2, 55.797614, -5.576685, 'https://maps.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/30/20.png'],
+  [55.797614, -5.576685, 58.797614, 0.033960, 'https://maps.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/31/19.png'],
+  [55.797614, -11.2, 58.797614, -5.576685, 'https://maps.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/30/19.png'],
+  [55.797614, -16.5, 58.797614, -11.2, 'https://maps.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/29/19.png'],
+  [52.497772, -16.5, 55.797614, -11.2, 'https://maps.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/29/20.png'],
+  [52.497772, 0.033960, 55.797614, 5.5, 'https://maps.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/32/20.png'],
+  [55.797614, 0.033960, 58.797614, 5.5, 'https://maps.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/32/19.png'],
+  [49, 0.033960, 52.497772, 5.5, 'https://maps.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/32/21.png'],
+  [49, -5.576685, 52.497772, 0.033960, 'https://maps.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/31/21.png'],
+  [49, -11.2, 52.497772, -5.576685, 'https://maps.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/30/21.png'],
+  [49, -16.5, 52.497772, -11.2, 'https://maps.darksky.net/'+timestamp+'/precipitation_intensity_dbz/6/29/21.png']]
 
   window.overlay[timestamp] = initOverlay(data)
