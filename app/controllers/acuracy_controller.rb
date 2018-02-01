@@ -5,13 +5,11 @@ class AcuracyController < ApplicationController
   def index
     @model_acuracy = []
 
-    all_models = ModelConfig.where(default: 1).collect(&:models).flatten
     rivers = River.with_station
     rivers.each do |river|
       model_acuracy = Hash.new(0)
-      models = all_models.select { |model| model.river_id == river.id }
+      predictions = Prediction.where(river_id: river.id).where('updated_at > ?', 2.weeks.ago)
 
-      predictions = models.collect(&:predictions).flatten
       predictions.each do |prediction|
         next if prediction.acuracy_info.nil?
         acuracy_info = JSON.parse(prediction.acuracy_info)
