@@ -80,3 +80,5 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'bootstrap-social-rails'
 gem 'font-awesome-rails'
+
+gem 'rails_12factor', group: :production
